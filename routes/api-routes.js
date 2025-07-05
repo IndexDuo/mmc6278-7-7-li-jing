@@ -147,7 +147,7 @@ router.post("/login", async (req, res) => {
                 // console.log("wrong password")
                 return res.status(400).end();
             } else {
-                console.log("match");
+                // console.log("match");
                 req.session.loggedIn = true;
                 req.session.userId = userQuery[0].id;
                 req.session.save(() => {
