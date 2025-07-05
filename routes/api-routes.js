@@ -106,7 +106,7 @@ router.post("/user", async (req, res) => {
         if (err.code == "ER_DUP_ENTRY") {
             res.status(409).send("user exists already");
         } else {
-            res.status(500).end;
+            res.status(500).end();
         }
     }
     // hash the password using bcrypt.hash and use 10 salt rounds
@@ -140,12 +140,12 @@ router.post("/login", async (req, res) => {
         // console.log(userQuery);
 
         if (userQuery.length === 0) {
-            return res.status(400).done();
+            return res.status(400).end();
         } else {
             const match = await bcrypt.compare(password, userQuery[0].password);
             if (!match) {
                 // console.log("wrong password")
-                return res.status(400).done();
+                return res.status(400).end();
             } else {
                 console.log("match");
                 req.session.loggedIn = true;
@@ -156,7 +156,7 @@ router.post("/login", async (req, res) => {
             }
         }
     } catch (err) {
-        res.status(500).end;
+        res.status(500).end();
     }
 });
 
