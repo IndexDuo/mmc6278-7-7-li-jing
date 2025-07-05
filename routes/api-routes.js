@@ -137,12 +137,14 @@ router.post("/login", async (req, res) => {
             `SELECT * FROM users WHERE username = ?`,
             [username]
         );
+        // console.log(userQuery);
 
         if (userQuery.length === 0) {
             return res.status(400).end;
         } else {
-            const match = await bcrypt.compare(password, userQuery.password);
+            const match = await bcrypt.compare(password, userQuery[0].password);
             if (!match) {
+              // console.log("wrong password")
                 return res.status(400).end;
             } else {
                 console.log("match");
