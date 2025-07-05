@@ -133,12 +133,16 @@ router.post("/login", async (req, res) => {
         if (!username || !password) {
             return res.status(400).send("Please provide the username/password");
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const [username] = awaitdb.query(
+            `SELECT * FROM users WHERE username =?`,
+            [username]
+        );
 
-        await db.query(`INSERT INTO users (username, password) VALUES (?,?)`, [
-            username,
-            hashedPassword,
-        ]);
+        if (username.length === 0)
+            await db.query(
+                `INSERT INTO users (username, password) VALUES (?,?)`,
+                [username, hashedPassword]
+            );
         res.redirect("/login");
     } catch (err) {
         //ER_DUP_ENTRY
