@@ -133,12 +133,16 @@ router.post("/login", async (req, res) => {
         if (!username || !password) {
             return res.status(400).send("Please provide the username/password");
         }
-        const [username] = await db.query(
+        const [usernameQuery] = await db.query(
             `SELECT * FROM users WHERE username =?`,
             [username]
         );
 
-        if (username.length === 0)
+        if (usernameQuery.length === 0){
+          return res.status(400)
+        }else{
+          bcrypt.compare
+        }
             await db.query(
                 `INSERT INTO users (username, password) VALUES (?,?)`,
                 [username, hashedPassword]
