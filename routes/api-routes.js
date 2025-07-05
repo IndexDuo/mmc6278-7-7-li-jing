@@ -144,11 +144,11 @@ router.post("/login", async (req, res) => {
         } else {
             const match = await bcrypt.compare(password, userQuery[0].password);
             if (!match) {
-              // console.log("wrong password")
+                // console.log("wrong password")
                 return res.status(400).end;
             } else {
                 console.log("match");
-                res.session.loggedIn = true;
+                req.session.loggedIn = true;
                 req.session.user = { id: user.id, username: user.username };
                 req.session.save(() => {
                     res.redirect("/");
