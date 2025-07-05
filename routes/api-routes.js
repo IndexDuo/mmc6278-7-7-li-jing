@@ -141,12 +141,8 @@ router.post("/login", async (req, res) => {
         if (usernameQuery.length === 0){
           return res.status(400)
         }else{
-          bcrypt.compare
+          const match = await bcrypt.compare(password,)
         }
-            await db.query(
-                `INSERT INTO users (username, password) VALUES (?,?)`,
-                [username, hashedPassword]
-            );
         res.redirect("/login");
     } catch (err) {
         //ER_DUP_ENTRY
