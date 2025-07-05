@@ -96,8 +96,13 @@ router.post("/user", async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await db.query(`INSERT INTO users (username, password VALUES (?,?)`);
+        await db.query(`INSERT INTO users (username, password VALUES (?,?)`, [
+            username,
+            hashedPassword,
+        ]);
+        res.redirect("/login");
     } catch (err) {
+        //ER_DUP_ENTRY
         res.status(500);
     }
     // hash the password using bcrypt.hash and use 10 salt rounds
