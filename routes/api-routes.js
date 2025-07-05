@@ -92,7 +92,7 @@ router
 router.post('/user', async (req, res) => {
   const {username, password} = req.body
   // if the username or password is not provided, return a 400 status
-  if(!username||!password){
+  if(!(username||password)){
   return res.status(409).send('Not enough inventory')}
 
   // hash the password using bcrypt.hash and use 10 salt rounds
