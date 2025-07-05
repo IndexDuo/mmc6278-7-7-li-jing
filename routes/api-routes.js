@@ -133,7 +133,7 @@ router.post("/login", async (req, res) => {
         if (!username || !password) {
             return res.status(400).send("Please provide the username/password");
         }
-        const [username] = awaitdb.query(
+        const [username] = await db.query(
             `SELECT * FROM users WHERE username =?`,
             [username]
         );
