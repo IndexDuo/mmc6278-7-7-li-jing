@@ -3,7 +3,11 @@ function checkAuth(req, res, next) {
 	// If the user is logged in, call next()
 	// If the user is not logged in, redirect to /login
 
-	
+	if(req.session.loggedIn){
+		return next();
+	}else{
+		
+	}
 }
 
 module.exports = checkAuth
