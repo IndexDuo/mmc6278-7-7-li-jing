@@ -146,7 +146,6 @@ router.post("/login", async (req, res) => {
                 console.log("match");
             }
         }
-        res.redirect("/login");
     } catch (err) {
         //ER_DUP_ENTRY
         if (err.code == "ER_DUP_ENTRY") {
