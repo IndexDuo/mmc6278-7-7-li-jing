@@ -145,6 +145,7 @@ router.post("/login", async (req, res) => {
             if (match) {
                 console.log("match");
                 res.session.loggedIn = true;
+                req.session.user = { id: user.id, username: user.username };
             } else {
                 return res.status(400).end;
             }
