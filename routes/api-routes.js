@@ -129,6 +129,25 @@ router.post("/login", async (req, res) => {
     // If the password matches, set req.session.loggedIn to true
     // set req.session.userId to the user's id
     // call req.session.save and in the callback redirect to /
+    try {
+        if (!username || !password) {
+            return res.status(400).send("Please provide the username/password");
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await db.query(`INSERT INTO users (username, password) VALUES (?,?)`, [
+            username,
+            hashedPassword,
+        ]);
+        res.redirect("/login");
+    } catch (err) {
+        //ER_DUP_ENTRY
+        if (err.code == "ER_DUP_ENTRY") {
+            res.status(409).send("user exists already");
+        } else {
+            res.status(500).end;
+        }
+    }
 });
 
 router.get("/logout", async (req, res) => {
