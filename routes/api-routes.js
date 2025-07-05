@@ -144,6 +144,9 @@ router.post("/login", async (req, res) => {
             const match = await bcrypt.compare(password, userQuery.password);
             if (match) {
                 console.log("match");
+                res.session.loggedIn = true;
+            } else {
+                return res.status(400).end;
             }
         }
     } catch (err) {
