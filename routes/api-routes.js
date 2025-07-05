@@ -133,15 +133,18 @@ router.post("/login", async (req, res) => {
         if (!username || !password) {
             return res.status(400).send("Please provide the username/password");
         }
-        const [usernameQuery] = await db.query(
+        const [userQuery] = await db.query(
             `SELECT * FROM users WHERE username =?`,
             [username]
         );
 
-        if (usernameQuery.length === 0){
-          return res.status(400)
-        }else{
-          const match = await bcrypt.compare(password,)
+        if (userQuery.length === 0) {
+            return res.status(400);
+        } else {
+            const match = await bcrypt.compare(password, userQuery.password);
+            if (match) {
+                console.log("match");
+            }
         }
         res.redirect("/login");
     } catch (err) {
