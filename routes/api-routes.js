@@ -139,7 +139,7 @@ router.post("/login", async (req, res) => {
         );
 
         if (userQuery.length === 0) {
-            return res.status(400);
+            return res.status(400).end;
         } else {
             const match = await bcrypt.compare(password, userQuery.password);
             if (match) {
