@@ -137,7 +137,7 @@ router.post("/login", async (req, res) => {
             `SELECT * FROM users WHERE username = ?`,
             [username]
         );
-        // console.log(userQuery);
+        console.log(userQuery);
 
         if (userQuery.length === 0) {
             return res.status(400).end;
@@ -149,7 +149,10 @@ router.post("/login", async (req, res) => {
             } else {
                 console.log("match");
                 req.session.loggedIn = true;
-                req.session.user = { id: user.id, username: user.username };
+                req.session.user = {
+                    id: userQuery[0].id,
+                    username: userQuery[0].username,
+                };
                 req.session.save(() => {
                     res.redirect("/");
                 });
