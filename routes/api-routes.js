@@ -149,10 +149,7 @@ router.post("/login", async (req, res) => {
             } else {
                 console.log("match");
                 req.session.loggedIn = true;
-                req.session.user = {
-                    id: userQuery[0].id,
-                    username: userQuery[0].username,
-                };
+                req.session.userId = userQuery[0].id;
                 req.session.save(() => {
                     res.redirect("/");
                 });
