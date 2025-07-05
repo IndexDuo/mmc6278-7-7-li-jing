@@ -91,7 +91,7 @@ router.post("/user", async (req, res) => {
     const { username, password } = req.body;
     // if the username or password is not provided, return a 400 status
     try {
-        if (!(username || password)) {
+        if (!username || !password) {
             return res.status(400).send("Please provide the username/password");
         }
         const hashedPassword = await bcrypt.hash(password, 10);
