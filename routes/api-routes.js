@@ -94,8 +94,9 @@ router.post("/user", async (req, res) => {
         if (!(username || password)) {
             return res.status(400).send("Please provide the username/password");
         }
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        
+        await db.query(`INSERT INTO users (username, password VALUES (?,?)`);
     } catch (err) {
         res.status(500);
     }
