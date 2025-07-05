@@ -142,21 +142,19 @@ router.post("/login", async (req, res) => {
             return res.status(400).end;
         } else {
             const match = await bcrypt.compare(password, userQuery.password);
-            if (match) {
+            if (!match) {
+                return res.status(400).end;
+            } else {
                 console.log("match");
                 res.session.loggedIn = true;
                 req.session.user = { id: user.id, username: user.username };
-            } else {
-                return res.status(400).end;
+                req.session.save(() => {
+                    res.redirect("/");
+                });
             }
         }
     } catch (err) {
-        //ER_DUP_ENTRY
-        if (err.code == "ER_DUP_ENTRY") {
-            res.status(409).send("user exists already");
-        } else {
-            res.status(500).end;
-        }
+        res.status(500).end;
     }
 });
 
