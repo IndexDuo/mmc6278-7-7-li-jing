@@ -137,7 +137,7 @@ router.post("/login", async (req, res) => {
             `SELECT * FROM users WHERE username = ?`,
             [username]
         );
-        console.log(userQuery);
+        // console.log(userQuery);
 
         if (userQuery.length === 0) {
             return res.status(400).end;
@@ -165,6 +165,10 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", async (req, res) => {
     // call req.session.destroy and in the callback redirect to /
+
+    req.session.destroy(() => {
+        res.redirect("/");
+    });
 });
 
 module.exports = router;
