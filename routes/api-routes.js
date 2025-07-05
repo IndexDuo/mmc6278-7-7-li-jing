@@ -103,7 +103,7 @@ router.post("/user", async (req, res) => {
         res.redirect("/login");
     } catch (err) {
         //ER_DUP_ENTRY
-        res.status(500);
+        res.status(500).end;
     }
     // hash the password using bcrypt.hash and use 10 salt rounds
     // then insert the username and hashed password into the users table
